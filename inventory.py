@@ -3,7 +3,7 @@
 
 import os
 from src.user import User, NewUser
-from src.database import create_table
+from src.database import Database, create_table
 
 
 class Inventory():
@@ -29,13 +29,14 @@ class Inventory():
         elif user_input == 1:
             self.login_user()
         elif user_input == 3:
-            self.create_database
+            self.create_database()
         else:
             self.exit_user()
 
     def create_user(self):
         print(f"Creating new user ...")
-        c = NewUser.create_user()
+        c = NewUser()
+        c.create_user()
         print(c)
         c.add_user_db()
 
@@ -43,7 +44,8 @@ class Inventory():
         pass
 
     def create_database(self):
-        create_table
+        d = Database()
+        d.create_table(d.createtb_user)
 
     def exit_user(self):
         pass

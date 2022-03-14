@@ -5,7 +5,7 @@
 - Lab manager: child
 - resercher: child
 """
-from src.database import Table, UserTable, create_table
+from src.database import *
 
 
 class User():
@@ -13,9 +13,8 @@ class User():
     and methods for different types of users.
     """
 
-    def __init__(self, user_type, user_name) -> None:
-        self.user_type = user_type
-        self.user_name = user_name
+    def __init__(self) -> None:
+        pass
 
     def list_table(self):
         pass
@@ -32,24 +31,15 @@ class NewUser(User):
         )
         """
 
-    def __init__(self, user_type, user_name) -> None:
-        super().__init__(user_type, user_name)
-        # if not db.table.user:
-        self.add_user_db()
+    def __init__(self) -> None:
+        super().__init__()
 
-    @classmethod
-    def create_user(cls):
-        while 1:
-            try:
-                user_type = input('Enter user type (manager/scientist): ')
-                user_name = input('Enter user name: ')
-                return(user_type, user_name)
-            except:
-                print(f'Invalid entry')
-                continue
-
-    def list_table(self):
-        pass
+    def create_user(self):
+        try:
+            self.user_type = input('Enter user type (manager/scientist): ')
+            self.user_name = input('Enter user name: ')
+        except:
+            print(f'Invalid entry')
 
     def add_user_db(self):
         user = UserTable()

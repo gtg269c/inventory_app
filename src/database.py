@@ -11,25 +11,34 @@ def get_tables():
     pass
 
 
-createtb_user = """create table user(
-            user_type text,
-            user_name text
-        )
-        """
-
-createtb_item = """create table item(
-            user_type text,
-            user_name text
-        )
-        """
-
-
 def create_table(command: str):
     connection = sqlite3.connect('inventory.db')
     cursor = connection.cursor()
-    cursor.execute(createtb_user)
+    cursor.execute(command)
     connection.commit()
     connection.close()
+
+
+class Database():
+
+    createtb_user = """create table user(
+                user_type text,
+                user_name text
+            )
+            """
+
+    createtb_item = """create table item(
+                user_type text,
+                user_name text
+            )
+            """
+
+    def create_table(self, command: str):
+        connection = sqlite3.connect('inventory.db')
+        cursor = connection.cursor()
+        cursor.execute(command)
+        connection.commit()
+        connection.close()
 
 
 class Table():
@@ -40,10 +49,11 @@ class Table():
         cursor = self.connection.cursor()
 
         cursor.execute(create_command)
+        result = cursor.fetchall()
 
         self.connection.commit()
         self.connection.close()
-        return cursor.fetchall()
+        return result
 
     def list_tables(self):
         return self.execute_cmd("SELECT name FROM sqlite_master WHERE type='table';")
