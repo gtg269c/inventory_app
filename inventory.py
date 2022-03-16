@@ -3,7 +3,12 @@
 
 import os
 from src.user import User, NewUser
-from src.database import Database, create_table
+from src.database import UserTable, NewTable
+
+
+class Login():
+    def __init__(self) -> None:
+        s
 
 
 class Inventory():
@@ -41,11 +46,13 @@ class Inventory():
         c.add_user_db()
 
     def login_user(self):
-        pass
+        l = UserTable()
+        l.authenticate_user
 
     def create_database(self):
-        d = Database()
+        d = NewTable()
         d.create_table(d.createtb_user)
+        d.create_table(d.createtb_item)
 
     def exit_user(self):
         pass
