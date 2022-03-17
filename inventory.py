@@ -8,35 +8,44 @@ from src.database import UserTable, NewTable
 
 class Login():
     def __init__(self) -> None:
-        s
+        self.user_name
 
 
 class Inventory():
     def __init__(self) -> None:
+        self.continue_greeting = True
         self.greeting()
 
     def greeting(self):
 
         greeting_options = [
-            (0, "create user"),
+            (0, "exit system"),
             (1, "login"),
-            (2, "exit system"),
-            (3, "create database")
+            (2, "create database"),
+            (3, "create user")
         ]
 
-        print(f"Welcome to the lab inventory system.")
-        print(f"What will you like to do? (choose an option)")
-        for key, value in greeting_options:
-            print(f"Press {key} to {value}")
-        user_input = int(input("choose an option: "))
-        if user_input == 0:
-            self.create_user()
-        elif user_input == 1:
-            self.login_user()
-        elif user_input == 3:
-            self.create_database()
-        else:
-            self.exit_user()
+        while self.continue_greeting:
+
+            print(f"Welcome to the lab inventory system.")
+            print(f"What will you like to do? (choose an option)")
+            for key, value in greeting_options:
+                print(f"Press {key} to {value}")
+            user_input = int(input("choose an option: "))
+
+            if user_input == 3:
+                self.create_user()
+
+            elif user_input == 1:
+                self.login_user()
+
+            elif user_input == 2:
+                self.create_database()
+
+            else:
+                self.exit_user()
+                self.continue_greeting = False
+                print(f"Exiting inventory system. Thank you.\n")
 
     def create_user(self):
         print(f"Creating new user ...")
