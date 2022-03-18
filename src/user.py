@@ -62,6 +62,10 @@ class LabManager(User):
 
     def __init__(self) -> None:
         super().__init__()
+        self.continue_greeting = True
+        self.menu()
+
+    def menu(self):
         self.greeting_options = [
             (0, "Main menu"),
             (1, "Search item"),
@@ -69,24 +73,34 @@ class LabManager(User):
             (3, "Add item to inventory")
         ]
 
-    def menu(self):
-        print(f"Welcome to the **Managers** portal.")
-        print(f"What will you like to do? (choose an option)")
-        for key, value in self.greeting_options:
-            print(f"Press {key} to {value}")
-        user_input = int(input("choose an option: "))
+        while self.continue_greeting:
 
-        if user_input == 3:
-            self.add_item()
-        elif user_input == 1:
-            self.search_item()
-        elif user_input == 2:
-            self.get_low_inventory()
-        else:
-            print(f"Exiting ** Managers ** system.\n")
+            print(f"Welcome to the **Managers** portal.")
+            print(f"What will you like to do? (choose an option)")
+            for key, value in self.greeting_options:
+                print(f"Press {key} to {value}")
+            user_input = int(input("choose an option: "))
+
+            if user_input == 3:
+                self.add_item()
+            elif user_input == 1:
+                self.search_item()
+            elif user_input == 2:
+                self.get_low_inventory()
+            else:
+                print(f"Exiting ** Managers ** system.\n")
+                self.continue_greeting = False
 
     def get_low_inventory(self, cutoff: int = 30):
-        pass
+        i = ItemTable()
+        results = i.list_item()
+
+        print(f'***** Items wth low inventory ********')
+        print(f"item_type   item_name   max_amount  current_amount  item_storage")
+        for result in results:
+            if (result[3]/result[2])*100 <= cutoff:
+                print(
+                    f"{result[0]}   {result[1]}    {result[2]} {result[3]}  {result[4]}")
 
     def add_item(self):
         try:
@@ -103,7 +117,19 @@ class LabManager(User):
                    current_voume=current_volume, item_storage=item_storage)
 
     def search_item(self):
-        pass
+        try:
+            search_col = input('Enter search column: ')
+            search_value = input('Enter search value: ')
+
+        except:
+            print(f'Invalid entry')
+
+        i = ItemTable()
+        results = i.get_item(search_col=search_col, search_value=search_value)
+        print(f"item_type   item_name   max_amount  current_amount  item_storage")
+        for result in results:
+            print(
+                f"{result[0]}   {result[1]}    {result[2]} {result[3]}  {result[4]}")
 
 
 class Researcher(User):
