@@ -2,13 +2,8 @@
 """
 
 import os
-from src.user import User, NewUser
+from src.user import LabManager, User, NewUser
 from src.database import UserTable, NewTable
-
-
-class Login():
-    def __init__(self) -> None:
-        self.user_name
 
 
 class Inventory():
@@ -55,8 +50,17 @@ class Inventory():
         c.add_user_db()
 
     def login_user(self):
+        try:
+            self.user_type = input('Enter user type: ')
+            self.user_name = input('Enter user name: ')
+        except:
+            print(f'Invalid entry')
         l = UserTable()
-        l.authenticate_user
+        ut = l.authenticate_user(user_type=self.user_type,
+                                 user_name=self.user_name)
+        print(f"User type {ut} authenticated")
+        if ut == 'manager':
+            LabManager().menu()
 
     def create_database(self):
         d = NewTable()

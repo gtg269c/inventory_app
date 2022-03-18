@@ -18,6 +18,20 @@ class Table():
         self.connection.close()
         return result
 
+    def get_records(self, create_command: str):
+        cursor = self.connection.cursor()
+
+        cursor.execute(create_command)
+        result = cursor.fetchall()
+
+        list_rows = []
+        for row in result:
+            list_rows.append(row)
+
+        self.connection.commit()
+        self.connection.close()
+        return list_rows
+
 
 class UserTable(Table):
 
@@ -29,10 +43,16 @@ class UserTable(Table):
         self.execute_cmd(create_command=command)
 
     def authenticate_user(self,  user_type: str, user_name: str):
-        command = f"SELECT count(*) FROM user WHERE user_type={user_type} AND user_name={user_name}"
-        user_type = ''
+        # AND user_name={user_name}"
+        # AND user_name='{user_name}'"
+        command = f"SELECT count(*) FROM user WHERE user_type='{user_type}' AND user_name='{user_name}'"
         result = self.execute_cmd(create_command=command)
-        if result == 1:
+        #list_row = []
+        # for row in result:
+        #    list_row.append(row)
+
+        print(f"Return result: {result}")
+        if result[0][0] == 1:
             return user_type
         else:
             return "no_match"
@@ -48,8 +68,13 @@ class ItemTable(Table):
     def list_item(self):
         pass
 
-    def add_item(self):
-        pass
+    def add_item(self, item_type: str,
+                 item_name: str,
+                 max_amount: int,
+                 current_voume: int,
+                 item_storage: int):
+        command = f"INSERT INTO item VALUES('{item_type}', '{item_name}', '{max_amount}', '{current_voume}', '{item_storage}')"
+        result = self.execute_cmd(create_command=command)
 
     def get_item(self):
         pass
