@@ -2,16 +2,25 @@
 """
 
 import os
-from src.user import LabManager, User, NewUser
+from src.user import LabManager, Researcher, User, NewUser
 from src.database import UserTable, NewTable
 
 
 class Inventory():
+    """ Inventory class is the interface to the lab inventory management system. 
+    It provides the following functionalities to the system.
+    - greetings: Menu to choose options
+    - create_database: to create fresh database tables
+    - login_user: assists in authenticating users for the system
+    - exit_system: log out of the system
+    """
+
     def __init__(self) -> None:
         self.continue_greeting = True
         self.greeting()
 
     def greeting(self):
+        """ Menu for the inventory management system. """
 
         greeting_options = [
             (0, "exit system"),
@@ -43,6 +52,7 @@ class Inventory():
                 print(f"Exiting inventory system. Thank you.\n")
 
     def create_user(self):
+        """ Method to create new users. """
         print(f"Creating new user ...")
         c = NewUser()
         c.create_user()
@@ -50,6 +60,7 @@ class Inventory():
         c.add_user_db()
 
     def login_user(self):
+        """ """
         try:
             self.user_type = input('Enter user type: ')
             self.user_name = input('Enter user name: ')
@@ -61,6 +72,10 @@ class Inventory():
         print(f"User type {ut} authenticated")
         if ut == 'manager':
             LabManager().menu()
+        elif ut == 'scientist':
+            Researcher().menu()
+        else:
+            print(f"Not a valid login")
 
     def create_database(self):
         d = NewTable()
